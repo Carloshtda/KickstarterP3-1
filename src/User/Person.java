@@ -1,39 +1,28 @@
 package User;
 
 public class Person {
-	private String name;
-	private String email;
-	private String password;
+	private Account account;
+	private Profile profile;
 	
-	public Person(String name, String email, String password) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.password = password;
+	public Person(Account account, Profile profile) {
+		this.account = account;
+		this.profile = profile;
 	}
 
-	public String getName() {
-		return name;
+	public Account getAccount() {
+		return account;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
-	public String getEmail() {
-		return email;
+	public Profile getProfile() {
+		return profile;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 	
 	
