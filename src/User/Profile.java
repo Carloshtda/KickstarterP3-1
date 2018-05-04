@@ -8,10 +8,8 @@ public class Profile {
 	private ArrayList<String> websites;
 	private String location;
 	
-	public Profile(String name, String location) {
-		super();
+	public Profile(String name) {
 		this.name = name;
-		this.location = location;
 	}
 
 	public String getName() {
@@ -46,6 +44,31 @@ public class Profile {
 		this.location = location;
 	}
 	
-	
+	public static void editProfile(Person logged){
+		int choice;
+		Scanner input = new Scanner(System.in);
+		do{
+			SystemF.View.showEditProfileOptions();
+			choice = input.nextInt();
+			switch (choice){
+				case 1:
+					//Edit name
+					break;
+				case 2:
+					//Edit picture
+					break;
+				case 3:
+					//Edit biography
+					break;
+				case 4:
+					//Edit location
+					break;
+				case 5:
+					//add websites
+					break;
+				default:
+			}
+		}while(choice != 0);
+	}
 	
 }

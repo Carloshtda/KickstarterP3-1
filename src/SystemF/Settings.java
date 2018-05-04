@@ -1,4 +1,4 @@
-package System;
+package SystemF;
 
 import java.util.*;
 
@@ -7,7 +7,7 @@ public class Settings {
 	public enum choiceSettings{
 		PROFILE(1), ACCOUNT(2), PAYMENT (3), EXIT(0);
 
-		public int choice;
+		public final int choice;
 
 		private choiceSettings(int choice) {
 			this.choice = choice;
@@ -18,7 +18,7 @@ public class Settings {
 		}
 	}
 	
-	public void view(){
+	public void editSettings(User.Person logged){
 		Scanner input = new Scanner(System.in);
 		int choice = 1;
 		
@@ -26,19 +26,19 @@ public class Settings {
 		choice = input.nextInt();
 		
 		while(choice != 0){
-			/*switch(choice){
-				case choiceSettings.PROFILE.getChoice():
-					//editProfile();
+			switch(choice){
+				case 1:
+					User.Profile.editProfile(logged);
 					break;
-				case choiceSettings.ACCOUNT.getChoice():
-					//editAccount();
+				case 2:
+					User.Account.editAccount(logged);
 					break;
-				case choiceSettings.PAYMENT.getChoice():
-					//editPayment();
+				case 3:
+					User.Account.paymentMethods(logged);
 					break;
 				default:
 					break;
-			}*/
+			}
 		}
 	}
 }
