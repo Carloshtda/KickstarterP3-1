@@ -3,6 +3,7 @@ package SystemF;
 public class View {
     public static void showProjectCategory(){
         System.out.println("Pick a project category to connect with a specific community. You can always update this later.");
+        showCategories();
     }
 
     public static void showProjectDescription(){
@@ -49,5 +50,24 @@ public class View {
                 "\n5. Community\n6. Back this project\n7. Remind me\n8. Comment\n0. Back");
     }
 
+    public static void showCategories(){
+        System.out.println("Art\nComics\nCrafts\nDance\nDesign\nFashion\n" +
+                "Film & Video\nFood\nGames\nJournalism\nMusic\nPhotography" +
+                "Technology\nTheater");
+    }
 
+    public static void showEditBasics(){
+        System.out.println("1. Project image\n2. Project title\n3. Short blurb\n    Give people a sense of what you’re doing." +
+                " Skip “Help me” and focus on what you’re making.\n4. Category" +
+                "5. Project location\n6. Funding duration\n7. Funding goal\n8. Project collaborators" +
+                "9. Project description\n   Use your project description to share more about " +
+                "what you’re raising funds to do and how you plan to pull it off." +
+                " \n0. Back");
+    }
+
+    public static void showEditReward(){
+        System.out.println("1. Reward title\n2. Pledge amount\n3. Description " +
+                "(Talk about the reward, estimated delivery, additional items)" +
+                "\n4. Shipping details\n0. Back");
+    }
 }

@@ -5,30 +5,30 @@ import SystemF.Message;
 import java.util.*;
 
 public class Person {
-	private Account account;
-	private Profile profile;
-	private ArrayList<SystemF.Message> messages;
-	
-	public Person(Account account, Profile profile) {
-		this.account = account;
-		this.profile = profile;
-	}
+    private Account account;
+    private Profile profile;
+    private ArrayList<SystemF.Message> messages;
 
-	public Account getAccount() {
-		return account;
-	}
+    public Person(Account account, Profile profile) {
+        this.account = account;
+        this.profile = profile;
+    }
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+    public Account getAccount() {
+        return account;
+    }
 
-	public Profile getProfile() {
-		return profile;
-	}
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 
     public ArrayList<Message> getMessages() {
         return messages;
@@ -38,8 +38,8 @@ public class Person {
         this.messages = messages;
     }
 
-	public static Person createAccount(ArrayList<Person> users){
-		Scanner input = new Scanner(System.in);
+    public static Person createAccount(ArrayList<Person> users) {
+        Scanner input = new Scanner(System.in);
 
         System.out.println("Name:");
         String name = input.nextLine();
@@ -55,6 +55,5 @@ public class Person {
         Person newPerson = new Person(newAccount, newProfile);
         users.add(newPerson);
         return newPerson;
-	}
-
+    }
 }
