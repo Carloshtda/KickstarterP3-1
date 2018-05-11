@@ -69,16 +69,16 @@ public class Account {
         do{
             System.out.println("1. Edit email\n2. Edit password\n0. Back");
             choice = input.nextInt();
+            input.nextLine();
 
-            switch (choice){
-                case 1:
-                    //Edit email
-                    break;
-                case 2:
-                    //Edit password
-                    break;
-                default:
-                    break;
+            if(choice == 1){
+                System.out.println("Enter with your new email");
+                String email = input.nextLine();
+                logged.getAccount().setEmail(email);
+            } else if(choice == 2){
+                System.out.println("Enter with your new password");
+                String password = input.nextLine();
+                logged.getAccount().setPassword(password);
             }
         }while(choice != 0);
 	}

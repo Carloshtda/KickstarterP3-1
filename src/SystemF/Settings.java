@@ -18,7 +18,7 @@ public class Settings {
 		}
 	}
 	
-	public void editSettings(User.Person logged){
+	public static void editSettings(User.Person logged){
 		Scanner input = new Scanner(System.in);
 		int choice = 1;
 		

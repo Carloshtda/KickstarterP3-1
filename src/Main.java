@@ -18,9 +18,9 @@ public class Main {
             if (choice == 1) {
                 signIn(users, projects);
             } else if (choice == 2) {
-                //Search
+                SystemF.Project.search(projects);
             } else if (choice == 3) {
-                //Explore
+                SystemF.Project.explore(projects);
             }
         }while(choice != 0);
     }
@@ -34,9 +34,9 @@ public class Main {
 
         if(choice == 1){
             logged = login(users);
-        } else {
+        } else if(choice == 2){
             logged = User.Person.createAccount(users);
-        }
+        } else return;
         logged = menuLogged(logged, users, projects);
     }
 
@@ -47,7 +47,7 @@ public class Main {
         System.out.println("Password:");
         String password = input.nextLine();
 
-        for(User.Person current : users){
+        for(User.Person current : users){   //tentar fazer tratamento de exception, usar um try/catch, ou um throws
             if(current.getAccount().getEmail().equals(email)){
                 if(current.getAccount().getPassword().equals(password)){
                     return current;
@@ -74,19 +74,19 @@ public class Main {
 
             switch (choice){
                 case 1:
-                    //explore
+                    SystemF.Project.explore(projects);
                     break;
                 case 2:
-                    //search
+                    SystemF.Project.search(projects);
                     break;
                 case 3:
                     SystemF.Project.starterProject(projects);
                     break;
                 case 4:
-                    //checkStuff();
+                    User.Stuff.myStuff();
                     break;
                 case 5:
-                    //settings
+                    SystemF.Settings.editSettings(logged);
                     break;
                 default:
                     break;

@@ -26,7 +26,7 @@ public class View {
     }
 
     public static void showEditProfileOptions(){
-        System.out.println("1. Edit name\n 2. Add/Edit picture\n3. Add/Edit biography\n" +
+        System.out.println("1. Edit name\n2. Add/Edit picture\n3. Add/Edit biography\n" +
                 "4. Add/Edit location\n5. Add websites\n0. Back");
     }
 
@@ -43,4 +43,11 @@ public class View {
         System.out.println("1. Follow creators\n2. Messages\n3. Profile\n" +
                 "4. Backed projects\n5. Saved Projects\n0. Back");
     }
+
+    public static void showProjectInfo(){
+        System.out.println("1. Campaign\n2. FAQ\n3. Updates\n4. Comments" +
+                "\n5. Community\n6. Back this project\n7. Remind me\n8. Comment\n0. Back");
+    }
+
+
 }

@@ -3,7 +3,7 @@ package User;
 import java.util.*;
 
 public class Stuff {
-    public void myStuff(){
+    public static void myStuff(){
         Scanner input = new Scanner(System.in);
         int choice;
         do{
@@ -12,19 +12,19 @@ public class Stuff {
 
             switch (choice){
                 case 1:
-                    //rasd
+                    //seguir criadores
                     break;
                 case 2:
-                    //
+                    //ver mensagens
                     break;
                 case 3:
-                    //sda
+                    //ver perfil
                     break;
                 case 4:
-                    //
+                    //projetos apoiados
                     break;
                 case 5:
-                    //
+                    //projetos salvos
                     break;
                 default:
                     break;

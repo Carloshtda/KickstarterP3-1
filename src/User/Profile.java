@@ -5,7 +5,7 @@ import java.util.*;
 public class Profile {
 	private String name;
 	private String biography;
-	private ArrayList<String> websites;
+	private ArrayList<String> websites = new ArrayList<>();
 	private String location;
 	
 	public Profile(String name) {
@@ -50,23 +50,34 @@ public class Profile {
 		do{
 			SystemF.View.showEditProfileOptions();
 			choice = input.nextInt();
+			input.nextLine();
+
 			switch (choice){
 				case 1:
-					//Edit name
+                    System.out.println("Enter with new name:");
+                    String name = input.nextLine();
+					logged.getProfile().setName(name);
 					break;
 				case 2:
-					//Edit picture
+                    System.out.println("Recuro em desenvolvimento");
 					break;
 				case 3:
-					//Edit biography
+                    System.out.println("Enter with new biography:");
+                    String biography = input.nextLine();
+                    logged.getProfile().setBiography(biography);
 					break;
 				case 4:
-					//Edit location
+                    System.out.println("What's your country?:");
+                    String location = input.nextLine();
+                    logged.getProfile().setLocation(location);
 					break;
 				case 5:
-					//add websites
+                    System.out.println("Enter with your website:");
+                    String website = input.nextLine();
+                    logged.getProfile().getWebsites().add(website);
 					break;
-				default:
+				case 0:
+                    return;
 			}
 		}while(choice != 0);
 	}
