@@ -42,7 +42,7 @@ public class View {
 
     public static void showMyStuff(){
         System.out.println("1. Follow creators\n2. Messages\n3. Profile\n" +
-                "4. Backed projects\n5. Saved Projects\n0. Back");
+                "4. Backed projects\n5. Saved Projects\n6. Edit project\n0. Back");
     }
 
     public static void showProjectInfo(){
@@ -69,5 +69,13 @@ public class View {
         System.out.println("1. Reward title\n2. Pledge amount\n3. Description " +
                 "(Talk about the reward, estimated delivery, additional items)" +
                 "\n4. Shipping details\n0. Back");
+    }
+
+    public static void printMessage(Message message){
+        System.out.println("---------------------------------------------");
+        System.out.println("Title: " + message.getTitle() + "\n"
+                + "From: " + message.getSender() + "\n"
+                + "Content: \n  " + message.getContent());
+        System.out.println("---------------------------------------------");
     }
 }

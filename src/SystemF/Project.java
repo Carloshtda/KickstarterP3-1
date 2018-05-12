@@ -17,8 +17,9 @@ public class Project {
 	private ArrayList<User.Person> collaborators;
 	private ArrayList<Reward> rewards;
 
-	public Project(User.Person logged, String category, String blurb,
+	public Project(String projectTitle, User.Person logged, String category, String blurb,
 			String location) {
+	    this.projectTitle = projectTitle;
 	    this.creator = logged;
 		this.category = category;
 		this.blurb = blurb;
@@ -26,12 +27,14 @@ public class Project {
 	}
     //arrumar a edição de dados
 	public static void starterProject(User.Person logged, ArrayList<Project> projects){
-		String projectTitle;
 		int fundingDuration;
 		double fundingGoal;
 		ArrayList<User.Person> collaborators;
 
 		Scanner input = new Scanner(System.in);
+
+        System.out.println("Project title:");
+        String projectTitle = input.nextLine();
 
 		SystemF.View.showProjectCategory();
 		String category = input.nextLine();
@@ -43,20 +46,18 @@ public class Project {
 		String country = input.nextLine();
 
 		SystemF.View.showProjectConditions();
-		String choice = input.nextLine();
-        choice = choice.toUpperCase();
+		String choice = input.nextLine().toLowerCase();
 
-        if(choice.equals("YES")){
-		    Project newProject = new Project(logged, category, blurb, country);
+        if(choice.equals("yes")){
+		    Project newProject = new Project(projectTitle ,logged, category, blurb, country);
             projects.add(newProject);
+            logged.getMyProjects().add(newProject);
 
 		    System.out.println("Want to complete your project now? Yes / No");
-            choice = input.nextLine();
-            choice = choice.toUpperCase();
+            choice = input.nextLine().toLowerCase();
 
-            if(choice.equals("YES")){
+            if(choice.equals("yes")){
                 SystemF.View.showProjectOptions();
-
 
             }
 		}
@@ -319,6 +320,20 @@ public class Project {
                 case 0:
                     break;
             }
+        }
+    }
+
+    public static int countBackedProjects(ArrayList<Project> backedProjects){
+	    int count = 0;
+	    for(Project current : backedProjects){
+	        count++;
+        }
+        return count;
+    }
+
+    public static void printBackedProjects(ArrayList<Project> backedProjects){
+	    for(Project current : backedProjects){
+            System.out.println(current.getProjectTitle());
         }
     }
 }

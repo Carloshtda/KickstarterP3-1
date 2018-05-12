@@ -81,5 +81,11 @@ public class Profile {
 			}
 		}while(choice != 0);
 	}
+
+    public static void printWebsites(ArrayList<String> websites){
+        for(String current : websites){
+            System.out.println(current);
+        }
+    }
 	
 }

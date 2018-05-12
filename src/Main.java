@@ -83,7 +83,7 @@ public class Main {
                     SystemF.Project.starterProject(logged, projects);
                     break;
                 case 4:
-                    User.Stuff.myStuff();
+                    User.Stuff.myStuff(logged, users);
                     break;
                 case 5:
                     SystemF.Settings.editSettings(logged);
