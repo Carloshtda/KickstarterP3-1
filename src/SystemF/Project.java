@@ -10,12 +10,14 @@ public class Project {
 	private String category;
 	private String blurb;
 	private String location;
+	private double reached;
 	private int fundingDuration;
 	private double fundingGoal;
 	private int backers;
 	private String fullDescription;
 	private ArrayList<User.Person> collaborators;
 	private ArrayList<Reward> rewards;
+	private ArrayList<Message> comments = new ArrayList<>();
 
 	public Project(String projectTitle, User.Person logged, String category, String blurb,
 			String location) {
@@ -25,12 +27,8 @@ public class Project {
 		this.blurb = blurb;
 		this.location = location;
 	}
-    //arrumar a edição de dados
-	public static void starterProject(User.Person logged, ArrayList<Project> projects){
-		int fundingDuration;
-		double fundingGoal;
-		ArrayList<User.Person> collaborators;
 
+	public static void starterProject(User.Person logged, ArrayList<Project> projects){
 		Scanner input = new Scanner(System.in);
 
         System.out.println("Project title:");
@@ -57,8 +55,7 @@ public class Project {
             choice = input.nextLine().toLowerCase();
 
             if(choice.equals("yes")){
-                SystemF.View.showProjectOptions();
-
+                editProject(newProject);
             }
 		}
 }
@@ -101,6 +98,14 @@ public class Project {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public double getReached() {
+        return reached;
+    }
+
+    public void setReached(double reached) {
+        this.reached = reached;
     }
 
     public int getFundingDuration() {
@@ -151,7 +156,15 @@ public class Project {
         this.fullDescription = fullDescription;
     }
 
-    public static void search(ArrayList<Project> projects){
+    public ArrayList<Message> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Message> comments) {
+        this.comments = comments;
+    }
+
+    public static void search(Person logged, ArrayList<Project> projects){
 	    Scanner input = new Scanner(System.in);
 
         System.out.println("Search for projects:");
@@ -159,7 +172,7 @@ public class Project {
 
         for(Project current : projects){
             if(current.getProjectTitle().equals(project)){
-                viewProject(current);
+                viewProject(logged, current);
                 return;
             }
         }
@@ -167,7 +180,7 @@ public class Project {
                 "\n    Why not change some things around or broaden your search?");
     }
 
-    public static void explore(ArrayList<Project> projects){
+    public static void explore(Person logged, ArrayList<Project> projects){
         Scanner input = new Scanner(System.in);
 
         System.out.println("    Choice a category");
@@ -185,11 +198,11 @@ public class Project {
         String choice = input.nextLine();
 
         if(!choice.equals("0"))
-            viewProject(getProject(choice, projects));
+            viewProject(logged ,getProject(choice, projects));
 
     }
 
-    public static void viewProject(Project project){
+    public static void viewProject(User.Person logged, Project project){
         Scanner input = new Scanner(System.in);
         int choice;
 
@@ -200,33 +213,61 @@ public class Project {
 
             switch (choice){
                 case 1:
-                    System.out.println("Mostrar informaçoes do projeto");
+                    showCampaign(project);
                     break;
                 case 2:
-                    System.out.println("mostrar faq");
+                    showComments(project);
                     break;
                 case 3:
-                    System.out.println("mostrar os updates");
-                    break;
-                case 4:
-                    System.out.println("mostrar comments");
-                    break;
-                case 5:
                     System.out.println(project.getBackers() + " people are supporting " + project.getCreator().getProfile().getName());
                     break;
+                case 4:
+                    User.Person.supportProject(project, logged);
+                    break;
+                case 5:
+                    User.Person.supportProject(project, logged);
+                    break;
                 case 6:
-                    //Apoiar o projeto
-                    break;
-                case 7:
-                    //Lembrar o projeto
-                    break;
-                case 8:
-                    //comentar
+                    Message.sendComment(project, logged);
                     break;
                 default:
                     break;
             }
         }while (choice != 0);
+    }
+
+    public static void showCampaign(Project project){
+        System.out.println("--------------------------------------------------");
+        System.out.println("Campaign");
+	    System.out.println(project.getProjectTitle());
+        System.out.println(project.getCreator().getProfile().getName());
+        System.out.println(project.getCategory());
+        System.out.println(project.getBlurb());
+        System.out.println(project.getFullDescription());
+        System.out.println("Weeks to go: " + project.getFundingDuration());
+        System.out.println("Pledged of $" + project.getFundingGoal() + "goal");
+        System.out.println("Reached US$ " + project.getReached());
+        System.out.println("Backers: " + project.getBackers());
+        System.out.println("--------------------------------------------------");
+        System.out.println("Rewards");
+        Reward.printRewards(project.getRewards());
+        System.out.println("--------------------------------------------------");
+        Reward.printRewards(project.getRewards());
+        System.out.println("--------------------------------------------------");
+        if(project.getCollaborators() != null){
+            System.out.println("Collaborators");
+            for(Person current : project.getCollaborators()){
+                System.out.println(current.getProfile().getName());
+            }
+        }
+        System.out.println("--------------------------------------------------");
+    }
+
+    public static void showComments(Project project){
+	    for(Message current : project.getComments()){
+            System.out.println(current.getContent());
+            System.out.println("            " + current.getSender());
+        }
     }
 
     public static Project getProject(String name, ArrayList<Project> projects){

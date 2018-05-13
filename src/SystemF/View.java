@@ -46,8 +46,8 @@ public class View {
     }
 
     public static void showProjectInfo(){
-        System.out.println("1. Campaign\n2. FAQ\n3. Updates\n4. Comments" +
-                "\n5. Community\n6. Back this project\n7. Remind me\n8. Comment\n0. Back");
+        System.out.println("1. Campaign\n2. Comments\n3. Community\n" +
+                "4. Back this project\n5. Remind me\n6. Comment\n0. Back");
     }
 
     public static void showCategories(){

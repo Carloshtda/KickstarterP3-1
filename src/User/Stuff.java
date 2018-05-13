@@ -1,5 +1,7 @@
 package User;
 
+import SystemF.Message;
+
 import java.util.*;
 
 public class Stuff {
@@ -16,16 +18,16 @@ public class Stuff {
                     follow(logged, users);
                     break;
                 case 2:
-                    messages(logged);
+                    messages(logged, users);
                     break;
                 case 3:
                     profile(logged);
                     break;
                 case 4:
-                    projects(logged.getBackedProjects());
+                    projects(logged.getBackedProjects(), logged);
                     break;
                 case 5:
-                    projects(logged.getSavedProjects());
+                    projects(logged.getSavedProjects(), logged);
                     break;
                 case 6:
                     System.out.println("Project title:");
@@ -69,20 +71,28 @@ public class Stuff {
         }
     }
 
-    public static void messages(Person logged){
+    public static void messages(Person logged, ArrayList<Person> users){
         Scanner input = new Scanner(System.in);
+        String choice;
 
-        System.out.println("Show all messages or only unread messages ?");
-        String choice = input.nextLine().toLowerCase();
+        System.out.println("Send or view messages?");
+        choice = input.nextLine().toLowerCase();
 
-        if(choice.equals("all")){
-            SystemF.Message.showAllMessages(logged);
-        } else if(choice.equals("unread")){
-            SystemF.Message.showUnreadMessages(logged);
+        if(choice.equals("send")){
+            Message.sendMessage(users, logged);
+        } else if(choice.equals("view")){
+            System.out.println("Show all messages or only unread messages ?");
+            choice = input.nextLine().toLowerCase();
+
+            if(choice.equals("all")){
+                SystemF.Message.showAllMessages(logged);
+            } else if(choice.equals("unread")){
+                SystemF.Message.showUnreadMessages(logged);
+            }
         }
     }
 
-    public static void projects(ArrayList<SystemF.Project> projects){
+    public static void projects(ArrayList<SystemF.Project> projects, Person logged){
         Scanner input = new Scanner(System.in);
 
         for(SystemF.Project current : projects){
@@ -94,7 +104,7 @@ public class Stuff {
         if(choice.equals("yes")){
             System.out.println("Which ?");
             choice = input.nextLine();
-            SystemF.Project.viewProject(SystemF.Project.getProject(choice, projects));
+            SystemF.Project.viewProject(logged, SystemF.Project.getProject(choice, projects));
         }
     }
 }

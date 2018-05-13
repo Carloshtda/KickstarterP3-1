@@ -109,5 +109,28 @@ public class Person {
         return null;
     }
 
+    public static void supportProject(Project project, Person logged){
+        Scanner input = new Scanner(System.in);
 
+        System.out.println("Want to support this project ?\n    Yes / No");
+        String choice = input.nextLine().toLowerCase();
+
+        if(choice.equals("yes")){
+            project.setBackers(project.getBackers()+1);
+            logged.getBackedProjects().add(project);
+            System.out.println("Project supported!");
+        }
+    }
+
+    public static void rememberProject(Project project, Person logged){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Want to mark this project ?\n    Yes / No");
+        String choice = input.nextLine().toLowerCase();
+
+        if(choice.equals("yes")){
+            logged.getSavedProjects().add(project);
+            System.out.println("Project marked!");
+        }
+    }
 }

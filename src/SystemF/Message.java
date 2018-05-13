@@ -49,14 +49,36 @@ public class Message {
     public static void sendMessage(ArrayList<User.Person> users, User.Person logged){
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Title:");
-        String title = input.nextLine();
+        System.out.println("What is the creator's name?");
+        String creator = input.nextLine();
 
-        System.out.println("Content:");
-        String content = input.nextLine();
+        User.Person receiver = User.Person.getPerson(creator, users);
+        if(receiver != null){
+            System.out.println("Title:");
+            String title = input.nextLine();
 
-        Message newMessage = new Message(logged.getProfile().getName(), title, content);
-        //addMessage(newMessage);
+            System.out.println("Content:");
+            String content = input.nextLine();
+
+            Message newMessage = new Message(logged.getProfile().getName(), title, content);
+            receiver.getMessages().add(newMessage);
+        } else System.out.println("Receiver nor found");
+
+    }
+
+    public static void sendComment(Project project, User.Person logged){
+        Scanner input = new Scanner(System.in);
+
+        for(Project current : logged.getBackedProjects()) {
+            if(current == project) {
+                System.out.println("Content:");
+                String content = input.nextLine();
+
+                Message newComment = new Message(logged.getProfile().getName(), null, content);
+                project.getComments().add(newComment);
+            }
+        }
+        System.out.println("Receiver nor found");
     }
 
     public static void showMessage(String title, ArrayList<Message> messages){

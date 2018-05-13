@@ -18,9 +18,9 @@ public class Main {
             if (choice == 1) {
                 signIn(users, projects);
             } else if (choice == 2) {
-                SystemF.Project.search(projects);
+                SystemF.Project.search(null, projects);
             } else if (choice == 3) {
-                SystemF.Project.explore(projects);
+                SystemF.Project.explore(null, projects);
             }
         }while(choice != 0);
     }
@@ -74,10 +74,10 @@ public class Main {
 
             switch (choice){
                 case 1:
-                    SystemF.Project.explore(projects);
+                    SystemF.Project.explore(logged, projects);
                     break;
                 case 2:
-                    SystemF.Project.search(projects);
+                    SystemF.Project.search(logged, projects);
                     break;
                 case 3:
                     SystemF.Project.starterProject(logged, projects);

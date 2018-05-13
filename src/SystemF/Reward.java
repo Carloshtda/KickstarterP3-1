@@ -109,4 +109,13 @@ public class Reward {
         }
         return null;
     }
+
+    public static void printRewards(ArrayList<Reward> rewards){
+        for(Reward current : rewards){
+            System.out.println(current.getTitle());
+            System.out.println("Pledge $" + current.getPledgeAmount());
+            System.out.println(current.getDescription());
+            System.out.println(current.getShippingDetails());
+        }
+    }
 }
