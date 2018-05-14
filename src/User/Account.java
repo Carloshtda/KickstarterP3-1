@@ -7,7 +7,7 @@ public class Account {
 	private String password;
 	private int[] cardNumber = new int[16];
 	private String cardHolderName;
-	private String expiration; // Mudar para string pedir entrada tipo mes / ano abril 2018, ou deixar assim msm
+	private String expiration;
 	private int[] securityCode = new int[3];
 	
 	public Account(String email, String password) {
@@ -86,12 +86,22 @@ public class Account {
 	public static void paymentMethods(Person logged){
 	    Scanner input = new Scanner(System.in);
 	    int[] cardNumber = new int[16];
+        boolean condition = true;
 
-        System.out.println("Card number:");
-        for(int i = 0; i < 16; i++){
-            cardNumber[i] = input.nextInt();
-            //Colocar tratamento de exception caso leia um caracter ou ultrapasse tamanho
-        }
+	    do{
+            try{
+                System.out.println("Card number:");
+                for(int i = 0; i < 16; i++){
+                    cardNumber[i] = input.nextInt();
+                }
+
+                condition = false;
+            } catch (InputMismatchException e){
+                System.out.println("It's not allowed to enter letters, only numbers");
+            }
+
+        } while(condition);
+
         logged.getAccount().setCardNumber(cardNumber);
 
         System.out.println("Cardholder name:");
@@ -102,11 +112,22 @@ public class Account {
         String expiration = input.nextLine();
         logged.getAccount().setExpiration(expiration);
 
-        System.out.println("Security code:");
         int[] securityCode = new int[3];
-        for(int i = 0; i < 3; i++){
-            securityCode[i] = input.nextInt();
-        }
+        condition = true;
+
+        do{
+            try{
+                System.out.println("Security code:");
+                for(int i = 0; i < 3; i++){
+                    securityCode[i] = input.nextInt();
+                }
+
+                condition = false;
+            } catch (InputMismatchException e){
+                System.out.println("It's not allowed to enter letters, only numbers");
+            }
+
+        } while(condition);
         logged.getAccount().setSecurityCode(securityCode);
     }
 

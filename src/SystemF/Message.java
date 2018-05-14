@@ -52,17 +52,22 @@ public class Message {
         System.out.println("What is the creator's name?");
         String creator = input.nextLine();
 
-        User.Person receiver = User.Person.getPerson(creator, users);
-        if(receiver != null){
-            System.out.println("Title:");
-            String title = input.nextLine();
+        try {
+            User.Person receiver = User.Person.getPerson(creator, users);
+            if (receiver != null) {
+                System.out.println("Title:");
+                String title = input.nextLine();
 
-            System.out.println("Content:");
-            String content = input.nextLine();
+                System.out.println("Content:");
+                String content = input.nextLine();
 
-            Message newMessage = new Message(logged.getProfile().getName(), title, content);
-            receiver.getMessages().add(newMessage);
-        } else System.out.println("Receiver nor found");
+                Message newMessage = new Message(logged.getProfile().getName(), title, content);
+                receiver.getMessages().add(newMessage);
+            }
+
+        } catch (NullPointerException e){
+            System.out.println("Receiver not found");
+        }
 
     }
 
@@ -76,6 +81,7 @@ public class Message {
 
                 Message newComment = new Message(logged.getProfile().getName(), null, content);
                 project.getComments().add(newComment);
+                return;
             }
         }
         System.out.println("Receiver nor found");

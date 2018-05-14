@@ -80,7 +80,7 @@ public class Main {
                     SystemF.Project.search(logged, projects);
                     break;
                 case 3:
-                    SystemF.Project.starterProject(logged, projects);
+                    SystemF.Project.starterProject(logged, projects, users);
                     break;
                 case 4:
                     User.Stuff.myStuff(logged, users);

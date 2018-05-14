@@ -46,7 +46,9 @@ public class Profile {
 	
 	public static void editProfile(Person logged){
 		int choice;
+		boolean condition = true;
 		Scanner input = new Scanner(System.in);
+
 		do{
 			SystemF.View.showEditProfileOptions();
 			choice = input.nextInt();
@@ -77,9 +79,10 @@ public class Profile {
                     logged.getProfile().getWebsites().add(website);
 					break;
 				case 0:
-                    return;
+				    condition = false;
+                    break;
 			}
-		}while(choice != 0);
+		}while(condition);
 	}
 
     public static void printWebsites(ArrayList<String> websites){

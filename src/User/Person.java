@@ -116,9 +116,24 @@ public class Person {
         String choice = input.nextLine().toLowerCase();
 
         if(choice.equals("yes")){
-            project.setBackers(project.getBackers()+1);
-            logged.getBackedProjects().add(project);
-            System.out.println("Project supported!");
+            System.out.println("Choice a reward");
+
+            for(SystemF.Reward current : project.getRewards()){
+                System.out.println(current.getTitle() + "Pledge $" + current.getPledgeAmount());
+            }
+            choice = input.nextLine();
+
+            try{
+                SystemF.Reward reward = SystemF.Reward.selectReward(choice, project.getRewards());
+                reward.setNumberBackers(reward.getNumberBackers() + 1);
+                project.setBackers(project.getBackers()+1);
+                project.setReached(project.getReached() + reward.getPledgeAmount());
+                logged.getBackedProjects().add(project);
+
+                System.out.println("Project supported!");
+            } catch (NullPointerException e){
+                System.out.println("Reward not found");
+            }
         }
     }
 

@@ -20,12 +20,13 @@ public class Settings {
 	
 	public static void editSettings(User.Person logged){
 		Scanner input = new Scanner(System.in);
-		int choice = 1;
+		int choice;
+		boolean condition = true;
 		
-		System.out.println("1. Edit profile\n2. Edit account\n3. Edit payment method\n0. Back");
-		choice = input.nextInt();
-		
-		while(choice != 0){
+		while(condition){
+            System.out.println("1. Edit profile\n2. Edit account\n3. Edit payment method\n0. Back");
+            choice = input.nextInt();
+
 			switch(choice){
 				case 1:
 					User.Profile.editProfile(logged);
@@ -36,8 +37,9 @@ public class Settings {
 				case 3:
 					User.Account.paymentMethods(logged);
 					break;
-				default:
-					break;
+                case 0:
+                    condition = false;
+                    break;
 			}
 		}
 	}

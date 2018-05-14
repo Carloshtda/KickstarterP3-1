@@ -6,12 +6,14 @@ public class Reward {
     private double pledgeAmount;
     private String description;
     private String shippingDetails;
+    private int numberBackers;
 
     public Reward(String title, double pledgeAmount, String description, String shippingDetails) {
         this.title = title;
         this.pledgeAmount = pledgeAmount;
         this.description = description;
         this.shippingDetails = shippingDetails;
+        this.numberBackers = 0;
     }
 
     public String getTitle() {
@@ -46,6 +48,14 @@ public class Reward {
         this.shippingDetails = shippingDetails;
     }
 
+    public int getNumberBackers() {
+        return numberBackers;
+    }
+
+    public void setNumberBackers(int numberBackers) {
+        this.numberBackers = numberBackers;
+    }
+
     public static Reward addReward(){
         Scanner input = new Scanner(System.in);
         Reward newReward;
@@ -53,8 +63,15 @@ public class Reward {
         System.out.println("Reward title:");
         String title = input.nextLine();
 
-        System.out.println("Pledge amount:");
-        double pledge = input.nextDouble();
+        double pledge;
+        try {
+            System.out.println("Pledge amount:");
+            pledge = input.nextDouble();
+
+        } catch (InputMismatchException e){
+            System.out.println("It's no allowed to enter letters, only numbers");
+            pledge = input.nextDouble();
+        }
 
         System.out.println("Description: (Talk about the reward, estimated delivery, additional items)");
         String description = input.nextLine();
@@ -62,16 +79,17 @@ public class Reward {
         System.out.println("Shipping details:");
         String shipping = input.nextLine();
 
-        return newReward = new Reward(title, pledge, description, shipping);
+        newReward = new Reward(title, pledge, description, shipping);
+        return newReward;
     }
 
     public static void editReward(Reward reward){
         Scanner input = new Scanner(System.in);
-        int choice = 1;
+        boolean condition = true;
 
-        while(choice != 0){
+        while(condition){
             View.showEditReward();
-            choice = input.nextInt();
+            int choice = input.nextInt();
 
             switch (choice){
                 case 1:
@@ -80,8 +98,15 @@ public class Reward {
                     reward.setTitle(title);
                     break;
                 case 2:
-                    System.out.println("New pledge amount:");
-                    double pledge = input.nextDouble();
+                    double pledge;
+                    try {
+                        System.out.println("New pledge amount:");;
+                        pledge = input.nextDouble();
+
+                    } catch (InputMismatchException e){
+                        System.out.println("It's no allowed to enter letters, only numbers");
+                        pledge = input.nextDouble();
+                    }
                     reward.setPledgeAmount(pledge);
                     break;
                 case 3:
@@ -90,11 +115,12 @@ public class Reward {
                     reward.setDescription(description);
                     break;
                 case 4:
-                    System.out.println("New shippping details:");
+                    System.out.println("New shipping details:");
                     String shipping = input.nextLine();
                     reward.setShippingDetails(shipping);
                     break;
                 case 0:
+                    condition = false;
                     break;
             }
         }
@@ -116,6 +142,7 @@ public class Reward {
             System.out.println("Pledge $" + current.getPledgeAmount());
             System.out.println(current.getDescription());
             System.out.println(current.getShippingDetails());
+            System.out.println("Backers: " + current.getNumberBackers());
         }
     }
 }

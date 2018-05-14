@@ -7,8 +7,10 @@ import java.util.*;
 public class Stuff {
     public static void myStuff(Person logged, ArrayList<User.Person> users){
         Scanner input = new Scanner(System.in);
-        int choice = 1;
-        while(choice != 0){
+        boolean condition = true;
+        int choice;
+
+        while(condition){
             SystemF.View.showMyStuff();
             choice = input.nextInt();
             input.nextLine();
@@ -34,17 +36,34 @@ public class Stuff {
                     String title = input.nextLine();
                     SystemF.Project.editProject(SystemF.Project.getProject(title, logged.getMyProjects()));
                     break;
+                case 0:
+                    condition = false;
+                    break;
             }
         }
 
     }
 
     public static void profile(Person logged){
+        Scanner input = new Scanner(System.in);
+
         System.out.println(logged.getProfile().getName());
         System.out.println(SystemF.Project.countBackedProjects(logged.getBackedProjects()));
         System.out.println(logged.getProfile().getBiography());
         Profile.printWebsites(logged.getProfile().getWebsites());
-        SystemF.Project.printBackedProjects(logged.getBackedProjects());
+        SystemF.Project.printProjects(logged.getBackedProjects());
+        System.out.println("My projects:");
+        try {
+            SystemF.Project.printProjects(logged.getMyProjects());
+            System.out.println("Want to edit any project? If yes enter with his title, or no.");
+
+            String title = input.nextLine();
+            if(!title.equals("no")){
+                SystemF.Project.editProject(SystemF.Project.getProject(title, logged.getMyProjects()));
+            }
+        } catch (NullPointerException e){
+            System.out.println("No projects started");
+        }
     }
 
     public static void follow(Person logged, ArrayList<Person> users){

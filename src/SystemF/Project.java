@@ -28,38 +28,6 @@ public class Project {
 		this.location = location;
 	}
 
-	public static void starterProject(User.Person logged, ArrayList<Project> projects){
-		Scanner input = new Scanner(System.in);
-
-        System.out.println("Project title:");
-        String projectTitle = input.nextLine();
-
-		SystemF.View.showProjectCategory();
-		String category = input.nextLine();
-
-		SystemF.View.showProjectDescription();
-		String blurb = input.nextLine();
-
-		SystemF.View.showProjectCountry();
-		String country = input.nextLine();
-
-		SystemF.View.showProjectConditions();
-		String choice = input.nextLine().toLowerCase();
-
-        if(choice.equals("yes")){
-		    Project newProject = new Project(projectTitle ,logged, category, blurb, country);
-            projects.add(newProject);
-            logged.getMyProjects().add(newProject);
-
-		    System.out.println("Want to complete your project now? Yes / No");
-            choice = input.nextLine().toLowerCase();
-
-            if(choice.equals("yes")){
-                editProject(newProject);
-            }
-		}
-}
-
     public Person getCreator() {
         return creator;
     }
@@ -164,6 +132,38 @@ public class Project {
         this.comments = comments;
     }
 
+    public static void starterProject(User.Person logged, ArrayList<Project> projects, ArrayList<User.Person> users){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Project title:");
+        String projectTitle = input.nextLine();
+
+        SystemF.View.showProjectCategory();
+        String category = input.nextLine();
+
+        SystemF.View.showProjectDescription();
+        String blurb = input.nextLine();
+
+        SystemF.View.showProjectCountry();
+        String country = input.nextLine();
+
+        SystemF.View.showProjectConditions();
+        String choice = input.nextLine().toLowerCase();
+
+        if(choice.equals("yes")){
+            Project newProject = new Project(projectTitle ,logged, category, blurb, country);
+            projects.add(newProject);
+            logged.getMyProjects().add(newProject);
+
+            System.out.println("Want to complete your project now? Yes / No");
+            choice = input.nextLine().toLowerCase();
+
+            if(choice.equals("yes")){
+                editProject(newProject, users);
+            }
+        }
+    }
+
     public static void search(Person logged, ArrayList<Project> projects){
 	    Scanner input = new Scanner(System.in);
 
@@ -198,13 +198,18 @@ public class Project {
         String choice = input.nextLine();
 
         if(!choice.equals("0"))
-            viewProject(logged ,getProject(choice, projects));
+            try {
+                viewProject(logged ,getProject(choice, projects));
+            } catch (NullPointerException e){
+                System.out.println("Project no found");
+            }
 
     }
 
     public static void viewProject(User.Person logged, Project project){
         Scanner input = new Scanner(System.in);
         int choice;
+        boolean condition = true;
 
         do {
             SystemF.View.showProjectInfo();
@@ -225,15 +230,16 @@ public class Project {
                     User.Person.supportProject(project, logged);
                     break;
                 case 5:
-                    User.Person.supportProject(project, logged);
+                    User.Person.rememberProject(project, logged);
                     break;
                 case 6:
                     Message.sendComment(project, logged);
                     break;
-                default:
+                case 0:
+                    condition = false;
                     break;
             }
-        }while (choice != 0);
+        }while (condition);
     }
 
     public static void showCampaign(Project project){
@@ -243,18 +249,20 @@ public class Project {
         System.out.println(project.getCreator().getProfile().getName());
         System.out.println(project.getCategory());
         System.out.println(project.getBlurb());
-        System.out.println(project.getFullDescription());
+        if(project.getFullDescription() != null) System.out.println(project.getFullDescription());
         System.out.println("Weeks to go: " + project.getFundingDuration());
-        System.out.println("Pledged of $" + project.getFundingGoal() + "goal");
+        System.out.println("Pledged of $" + project.getFundingGoal() + " goal");
         System.out.println("Reached US$ " + project.getReached());
         System.out.println("Backers: " + project.getBackers());
         System.out.println("--------------------------------------------------");
         System.out.println("Rewards");
-        Reward.printRewards(project.getRewards());
-        System.out.println("--------------------------------------------------");
-        Reward.printRewards(project.getRewards());
-        System.out.println("--------------------------------------------------");
+        try {
+            Reward.printRewards(project.getRewards());
+        } catch (NullPointerException e){
+            System.out.println("No registered rewards");
+        }
         if(project.getCollaborators() != null){
+            System.out.println("--------------------------------------------------");
             System.out.println("Collaborators");
             for(Person current : project.getCollaborators()){
                 System.out.println(current.getProfile().getName());
@@ -279,18 +287,17 @@ public class Project {
         return null;
     }
 
-    public static void editProject(Project project){
+    public static void editProject(Project project, ArrayList<User.Person> users){
 	    Scanner input = new Scanner(System.in);
 
         System.out.println("Edit/Add basics or rewards ?");
         String choice = input.nextLine();
 
         if(choice.equals("basics")){
-            editBasics(project);
+            editBasics(project, users);
         } else if(choice.equals("rewards")){
             System.out.println("Edit or add ?");
-            choice = input.nextLine();
-            choice = choice.toLowerCase();
+            choice = input.nextLine().toLowerCase();
 
             if(choice.equals("add")){
                 project.getRewards().add(Reward.addReward());
@@ -305,11 +312,12 @@ public class Project {
         }
     }
 
-    public static void editBasics(Project project){
-	    int choice = 1;
+    public static void editBasics(Project project, ArrayList<User.Person> users){
+	    int choice;
+	    boolean condition = true;
 	    Scanner input = new Scanner(System.in);
 
-	    while(choice != 0){
+	    while(condition){
             View.showEditBasics();
             choice = input.nextInt();
             input.nextLine();
@@ -348,10 +356,10 @@ public class Project {
                     double goal = input.nextDouble();
                     project.setFundingGoal(goal);
                     break;
-                case 8://arrumar dps
+                case 8:
                     System.out.println("Name of new collaborator:");
                     String name = input.nextLine();
-                    project.getCollaborators();
+                    project.getCollaborators().add(User.Person.getPerson(name, users));
                     break;
                 case 9:
                     System.out.println("New description");
@@ -359,6 +367,7 @@ public class Project {
                     project.setFullDescription(description);
                     break;
                 case 0:
+                    condition = false;
                     break;
             }
         }
@@ -372,7 +381,7 @@ public class Project {
         return count;
     }
 
-    public static void printBackedProjects(ArrayList<Project> backedProjects){
+    public static void printProjects(ArrayList<Project> backedProjects){
 	    for(Project current : backedProjects){
             System.out.println(current.getProjectTitle());
         }
