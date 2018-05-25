@@ -1,4 +1,4 @@
-package User;
+package user;
 
 import java.util.*;
 
@@ -10,6 +10,8 @@ public class Profile {
 	
 	public Profile(String name) {
 		this.name = name;
+		this.biography = "not defined yet";
+		this.location = "not defined";
 	}
 
 	public String getName() {
@@ -50,7 +52,7 @@ public class Profile {
 		Scanner input = new Scanner(System.in);
 
 		do{
-			SystemF.View.showEditProfileOptions();
+			systemF.View.showEditProfileOptions();
 			choice = input.nextInt();
 			input.nextLine();
 

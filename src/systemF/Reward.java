@@ -1,4 +1,4 @@
-package SystemF;
+package systemF;
 
 import java.util.*;
 public class Reward {

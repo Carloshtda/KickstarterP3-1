@@ -1,7 +1,10 @@
-package SystemF;
+package systemF;
 
 import java.util.*;
-import User.Person;
+
+import exceptions.InputTreatment;
+import user.Entity;
+import user.Person;
 
 
 public class Project {
@@ -15,11 +18,13 @@ public class Project {
 	private double fundingGoal;
 	private int backers;
 	private String fullDescription;
-	private ArrayList<User.Person> collaborators;
+	private ArrayList<user.Person> collaborators;
 	private ArrayList<Reward> rewards;
 	private ArrayList<Message> comments = new ArrayList<>();
 
-	public Project(String projectTitle, User.Person logged, String category, String blurb,
+	static Scanner input = new Scanner(System.in);
+	
+	public Project(String projectTitle, Person logged, String category, String blurb,
 			String location) {
 	    this.projectTitle = projectTitle;
 	    this.creator = logged;
@@ -132,22 +137,21 @@ public class Project {
         this.comments = comments;
     }
 
-    public static void starterProject(User.Person logged, ArrayList<Project> projects, ArrayList<User.Person> users){
-        Scanner input = new Scanner(System.in);
-
+    public static void starterProject(user.Person logged, ArrayList<Project> projects, ArrayList<user.Person> users){
+  
         System.out.println("Project title:");
         String projectTitle = input.nextLine();
 
-        SystemF.View.showProjectCategory();
+        systemF.View.showProjectCategory();
         String category = input.nextLine();
 
-        SystemF.View.showProjectDescription();
+        systemF.View.showProjectDescription();
         String blurb = input.nextLine();
 
-        SystemF.View.showProjectCountry();
+        systemF.View.showProjectCountry();
         String country = input.nextLine();
 
-        SystemF.View.showProjectConditions();
+        systemF.View.showProjectConditions();
         String choice = input.nextLine().toLowerCase();
 
         if(choice.equals("yes")){
@@ -165,7 +169,6 @@ public class Project {
     }
 
     public static void search(Person logged, ArrayList<Project> projects){
-	    Scanner input = new Scanner(System.in);
 
         System.out.println("Search for projects:");
         String project = input.nextLine();
@@ -176,18 +179,17 @@ public class Project {
                 return;
             }
         }
-        System.out.println("Oops! We couldn’t find any results. Did you mean" + project +
-                "\n    Why not change some things around or broaden your search?");
+        System.out.println("Oops! We could not find any results. Did you mean " + project +
+                ".\n    Why not change some things around or broaden your search?");
     }
 
     public static void explore(Person logged, ArrayList<Project> projects){
-        Scanner input = new Scanner(System.in);
-
-        System.out.println("    Choice a category");
-        SystemF.View.showCategories();
+ 
+        System.out.println("    Choose a category");
+        View.showCategories();
         String category = input.nextLine();
 
-        for(SystemF.Project current : projects){
+        for(systemF.Project current : projects){
             if(current.getCategory().equals(category)){
                 System.out.println(current.getProjectTitle());
             }
@@ -206,14 +208,11 @@ public class Project {
 
     }
 
-    public static void viewProject(User.Person logged, Project project){
-        Scanner input = new Scanner(System.in);
-        int choice;
-        boolean condition = true;
-
+    public static void viewProject(Person logged, Project project){
+        int choice = 1;
         do {
-            SystemF.View.showProjectInfo();
-            choice = input.nextInt();
+            systemF.View.showProjectInfo();
+            choice = InputTreatment.inputLimitedInteger(0, 6);
             System.out.println(project.getProjectTitle());
 
             switch (choice){
@@ -227,19 +226,18 @@ public class Project {
                     System.out.println(project.getBackers() + " people are supporting " + project.getCreator().getProfile().getName());
                     break;
                 case 4:
-                    User.Person.supportProject(project, logged);
+                    Person.supportProject(project, logged);
                     break;
                 case 5:
-                    User.Person.rememberProject(project, logged);
+                    Person.rememberProject(project, logged);
                     break;
                 case 6:
                     Message.sendComment(project, logged);
                     break;
                 case 0:
-                    condition = false;
                     break;
             }
-        }while (condition);
+        }while (choice != 0);
     }
 
     public static void showCampaign(Project project){
@@ -279,7 +277,7 @@ public class Project {
     }
 
     public static Project getProject(String name, ArrayList<Project> projects){
-        for(SystemF.Project current : projects){
+        for(systemF.Project current : projects){
             if(current.getProjectTitle().equals(name)){
                 return current;
             }
@@ -287,7 +285,7 @@ public class Project {
         return null;
     }
 
-    public static void editProject(Project project, ArrayList<User.Person> users){
+    public static void editProject(Project project, ArrayList<user.Person> users){
 	    Scanner input = new Scanner(System.in);
 
         System.out.println("Edit/Add basics or rewards ?");
@@ -312,14 +310,12 @@ public class Project {
         }
     }
 
-    public static void editBasics(Project project, ArrayList<User.Person> users){
+    public static void editBasics(Project project, ArrayList<user.Person> users){
 	    int choice;
 	    boolean condition = true;
-	    Scanner input = new Scanner(System.in);
-
 	    while(condition){
             View.showEditBasics();
-            choice = input.nextInt();
+            choice = InputTreatment.inputLimitedInteger(0, 9);
             input.nextLine();
 
             switch (choice){
@@ -359,7 +355,7 @@ public class Project {
                 case 8:
                     System.out.println("Name of new collaborator:");
                     String name = input.nextLine();
-                    project.getCollaborators().add(User.Person.getPerson(name, users));
+                    project.getCollaborators().add((Person) Person.getPerson(name, users));
                     break;
                 case 9:
                     System.out.println("New description");

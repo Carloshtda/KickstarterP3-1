@@ -1,6 +1,9 @@
-package User;
+package user;
 
 import java.util.*;
+
+import exceptions.InputTreatment;
+
 
 public class Account {
 	private String email;
@@ -9,6 +12,8 @@ public class Account {
 	private String cardHolderName;
 	private String expiration;
 	private int[] securityCode = new int[3];
+	
+	static Scanner input = new Scanner(System.in);
 	
 	public Account(String email, String password) {
 		this.email = email;
@@ -64,7 +69,6 @@ public class Account {
 	}
 	
 	public static void editAccount(Person logged){
-        Scanner input = new Scanner(System.in);
         int choice;
         do{
             System.out.println("1. Edit email\n2. Edit password\n0. Back");
@@ -84,24 +88,13 @@ public class Account {
 	}
 
 	public static void paymentMethods(Person logged){
-	    Scanner input = new Scanner(System.in);
+	  
 	    int[] cardNumber = new int[16];
-        boolean condition = true;
-
-	    do{
-            try{
-                System.out.println("Card number:");
-                for(int i = 0; i < 16; i++){
-                    cardNumber[i] = input.nextInt();
-                }
-
-                condition = false;
-            } catch (InputMismatchException e){
-                System.out.println("It's not allowed to enter letters, only numbers");
-            }
-
-        } while(condition);
-
+   
+        System.out.println("Card number:");
+        for(int i = 0; i < 16; i++){
+        	cardNumber[i] = InputTreatment.inputLimitedInteger(0, 9);
+        }
         logged.getAccount().setCardNumber(cardNumber);
 
         System.out.println("Cardholder name:");
@@ -113,21 +106,10 @@ public class Account {
         logged.getAccount().setExpiration(expiration);
 
         int[] securityCode = new int[3];
-        condition = true;
-
-        do{
-            try{
-                System.out.println("Security code:");
-                for(int i = 0; i < 3; i++){
-                    securityCode[i] = input.nextInt();
-                }
-
-                condition = false;
-            } catch (InputMismatchException e){
-                System.out.println("It's not allowed to enter letters, only numbers");
-            }
-
-        } while(condition);
+        System.out.println("Security code:");
+        for(int i = 0; i < 3; i++){
+        	securityCode[i] = InputTreatment.inputLimitedInteger(0, 9);
+        }
         logged.getAccount().setSecurityCode(securityCode);
     }
 

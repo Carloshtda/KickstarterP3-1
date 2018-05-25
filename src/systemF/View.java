@@ -1,4 +1,4 @@
-package SystemF;
+package systemF;
 
 public class View {
     public static void showProjectCategory(){
@@ -7,12 +7,12 @@ public class View {
     }
 
     public static void showProjectDescription(){
-        System.out.println("Describe what you’ll be creating.\n     And don’t worry, you can edit this later, too.");
+        System.out.println("Describe what you will be creating.\n     And dont worry, you can edit this later, too.");
     }
 
     public static void showProjectCountry(){
-        System.out.println("Finally, let’s confirm your eligibility.\n  " +
-                "Tell us where you’re based and confirm a few other details before we proceed.\n" +
+        System.out.println("Finally, lets confirm your eligibility.\n  " +
+                "Tell us where you are based and confirm a few other details before we proceed.\n" +
                 "Enter your country: ");
     }
 
@@ -57,11 +57,11 @@ public class View {
     }
 
     public static void showEditBasics(){
-        System.out.println("1. Project image\n2. Project title\n3. Short blurb\n    Give people a sense of what you’re doing." +
-                " Skip “Help me” and focus on what you’re making.\n4. Category" +
+        System.out.println("1. Project image\n2. Project title\n3. Short blurb\n    Give people a sense of what you are doing." +
+                " Skip “Help me�? and focus on what you are making.\n4. Category" +
                 "5. Project location\n6. Funding duration\n7. Funding goal\n8. Project collaborators" +
                 "9. Project description\n   Use your project description to share more about " +
-                "what you’re raising funds to do and how you plan to pull it off." +
+                "what you are raising funds to do and how you plan to pull it off." +
                 " \n0. Back");
     }
 

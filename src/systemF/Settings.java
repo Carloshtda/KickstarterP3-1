@@ -1,4 +1,4 @@
-package SystemF;
+package systemF;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ public class Settings {
 		}
 	}
 	
-	public static void editSettings(User.Person logged){
+	public static void editSettings(user.Person logged){
 		Scanner input = new Scanner(System.in);
 		int choice;
 		boolean condition = true;
@@ -29,13 +29,13 @@ public class Settings {
 
 			switch(choice){
 				case 1:
-					User.Profile.editProfile(logged);
+					user.Profile.editProfile(logged);
 					break;
 				case 2:
-					User.Account.editAccount(logged);
+					user.Account.editAccount(logged);
 					break;
 				case 3:
-					User.Account.paymentMethods(logged);
+					user.Account.paymentMethods(logged);
 					break;
                 case 0:
                     condition = false;

@@ -1,17 +1,17 @@
-package User;
-
-import SystemF.Message;
+package user;
 
 import java.util.*;
 
+import systemF.Message;
+
 public class Stuff {
-    public static void myStuff(Person logged, ArrayList<User.Person> users){
+    public static void myStuff(Person logged, ArrayList<user.Person> users){
         Scanner input = new Scanner(System.in);
         boolean condition = true;
         int choice;
 
         while(condition){
-            SystemF.View.showMyStuff();
+            systemF.View.showMyStuff();
             choice = input.nextInt();
             input.nextLine();
 
@@ -23,7 +23,7 @@ public class Stuff {
                     messages(logged, users);
                     break;
                 case 3:
-                    profile(logged);
+                    profile(logged, users);
                     break;
                 case 4:
                     projects(logged.getBackedProjects(), logged);
@@ -34,7 +34,7 @@ public class Stuff {
                 case 6:
                     System.out.println("Project title:");
                     String title = input.nextLine();
-                    SystemF.Project.editProject(SystemF.Project.getProject(title, logged.getMyProjects()));
+                    systemF.Project.editProject(systemF.Project.getProject(title, logged.getMyProjects()), users);
                     break;
                 case 0:
                     condition = false;
@@ -44,22 +44,22 @@ public class Stuff {
 
     }
 
-    public static void profile(Person logged){
+    public static void profile(Person logged, ArrayList<user.Person> users){
         Scanner input = new Scanner(System.in);
 
         System.out.println(logged.getProfile().getName());
-        System.out.println(SystemF.Project.countBackedProjects(logged.getBackedProjects()));
+        System.out.println(systemF.Project.countBackedProjects(logged.getBackedProjects()));
         System.out.println(logged.getProfile().getBiography());
         Profile.printWebsites(logged.getProfile().getWebsites());
-        SystemF.Project.printProjects(logged.getBackedProjects());
+        systemF.Project.printProjects(logged.getBackedProjects());
         System.out.println("My projects:");
         try {
-            SystemF.Project.printProjects(logged.getMyProjects());
+            systemF.Project.printProjects(logged.getMyProjects());
             System.out.println("Want to edit any project? If yes enter with his title, or no.");
 
             String title = input.nextLine();
             if(!title.equals("no")){
-                SystemF.Project.editProject(SystemF.Project.getProject(title, logged.getMyProjects()));
+                systemF.Project.editProject(systemF.Project.getProject(title, logged.getMyProjects()), users);
             }
         } catch (NullPointerException e){
             System.out.println("No projects started");
@@ -84,7 +84,7 @@ public class Stuff {
                 choice = input.nextLine();
 
                 if(!choice.equals("no")){
-                    logged.getFollowing().add(Person.getPerson(choice, users));
+                    logged.getFollowing().add((Person)Person.getPerson(choice, users));
                 }
             }
         }
@@ -104,17 +104,17 @@ public class Stuff {
             choice = input.nextLine().toLowerCase();
 
             if(choice.equals("all")){
-                SystemF.Message.showAllMessages(logged);
+                systemF.Message.showAllMessages(logged);
             } else if(choice.equals("unread")){
-                SystemF.Message.showUnreadMessages(logged);
+                systemF.Message.showUnreadMessages(logged);
             }
         }
     }
 
-    public static void projects(ArrayList<SystemF.Project> projects, Person logged){
+    public static void projects(ArrayList<systemF.Project> projects, Person logged){
         Scanner input = new Scanner(System.in);
 
-        for(SystemF.Project current : projects){
+        for(systemF.Project current : projects){
             System.out.println(current.getProjectTitle());
         }
         System.out.println("Do you want to see any project ?\n      Yes or no");
@@ -123,7 +123,7 @@ public class Stuff {
         if(choice.equals("yes")){
             System.out.println("Which ?");
             choice = input.nextLine();
-            SystemF.Project.viewProject(logged, SystemF.Project.getProject(choice, projects));
+            systemF.Project.viewProject(logged, systemF.Project.getProject(choice, projects));
         }
     }
 }

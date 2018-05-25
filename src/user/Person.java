@@ -1,19 +1,23 @@
-package User;
+package user;
 
-import SystemF.Message;
-import SystemF.Project;
-
+import java.nio.charset.MalformedInputException;
 import java.util.*;
 
-public class Person {
+import menu.Main;
+import systemF.Message;
+import systemF.Project;
+
+public class Person extends Entity{
     private Account account;
     private Profile profile;
-    private ArrayList<SystemF.Message> messages = new ArrayList<>();
-    private ArrayList<SystemF.Project> myProjects = new ArrayList<>();
-    private ArrayList<SystemF.Project> backedProjects = new ArrayList<>();
-    private ArrayList<SystemF.Project> savedProjects = new ArrayList<>();
+    private ArrayList<systemF.Message> messages = new ArrayList<>();
+    private ArrayList<systemF.Project> myProjects = new ArrayList<>();
+    private ArrayList<systemF.Project> backedProjects = new ArrayList<>();
+    private ArrayList<systemF.Project> savedProjects = new ArrayList<>();
     private ArrayList<Person> following = new ArrayList<>();
 
+    static Scanner input = new Scanner(System.in);
+    
     public Person(Account account, Profile profile) {
         this.account = account;
         this.profile = profile;
@@ -76,7 +80,6 @@ public class Person {
     }
 
     public static Person createAccount(ArrayList<Person> users) {
-        Scanner input = new Scanner(System.in);
 
         System.out.println("Name:");
         String name = input.nextLine();
@@ -100,17 +103,16 @@ public class Person {
         }
     }
 
-    public static Person getPerson(String name, ArrayList<Person> users){
+    public static Entity getPerson(String name, ArrayList<Person> users){
         for(Person current : users){
             if(current.getProfile().getName().equals(name)){
                 return current;
             }
         }
-        return null;
+        return new NullPerson();
     }
 
     public static void supportProject(Project project, Person logged){
-        Scanner input = new Scanner(System.in);
 
         System.out.println("Want to support this project ?\n    Yes / No");
         String choice = input.nextLine().toLowerCase();
@@ -118,13 +120,13 @@ public class Person {
         if(choice.equals("yes")){
             System.out.println("Choice a reward");
 
-            for(SystemF.Reward current : project.getRewards()){
+            for(systemF.Reward current : project.getRewards()){
                 System.out.println(current.getTitle() + "Pledge $" + current.getPledgeAmount());
             }
             choice = input.nextLine();
 
             try{
-                SystemF.Reward reward = SystemF.Reward.selectReward(choice, project.getRewards());
+                systemF.Reward reward = systemF.Reward.selectReward(choice, project.getRewards());
                 reward.setNumberBackers(reward.getNumberBackers() + 1);
                 project.setBackers(project.getBackers()+1);
                 project.setReached(project.getReached() + reward.getPledgeAmount());
@@ -138,14 +140,23 @@ public class Person {
     }
 
     public static void rememberProject(Project project, Person logged){
-        Scanner input = new Scanner(System.in);
-
         System.out.println("Want to mark this project ?\n    Yes / No");
         String choice = input.nextLine().toLowerCase();
-
         if(choice.equals("yes")){
             logged.getSavedProjects().add(project);
             System.out.println("Project marked!");
         }
     }
+
+	@Override
+	public void acessLoggedMenu(Entity logged, ArrayList<Person> users, ArrayList<Project> projects) {
+			Main.menuLogged((Person)logged, users, projects);
+		
+	}
+
+	@Override
+	public void warning() {
+		System.out.println("Person found");
+		
+	}
 }

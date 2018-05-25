@@ -1,6 +1,10 @@
-package SystemF;
+package systemF;
 
 import java.util.*;
+
+import user.Entity;
+import user.NullPerson;
+import user.Person;
 
 public class Message {
 	private String sender;
@@ -46,32 +50,32 @@ public class Message {
         this.read = read;
     }
 
-    public static void sendMessage(ArrayList<User.Person> users, User.Person logged){
+    public static void sendMessage(ArrayList<user.Person> users, user.Person logged){
         Scanner input = new Scanner(System.in);
 
         System.out.println("What is the creator's name?");
         String creator = input.nextLine();
+        Entity user = Person.getPerson(creator, users);
+        if (user instanceof NullPerson) {
+        	user.warning();
+        }
+        else
+        {
+        	Person receiver = (Person) user;
+        	System.out.println("Title:");
+        	String title = input.nextLine();
 
-        try {
-            User.Person receiver = User.Person.getPerson(creator, users);
-            if (receiver != null) {
-                System.out.println("Title:");
-                String title = input.nextLine();
+        	System.out.println("Content:");
+        	String content = input.nextLine();
 
-                System.out.println("Content:");
-                String content = input.nextLine();
+            Message newMessage = new Message(logged.getProfile().getName(), title, content);
+            receiver.getMessages().add(newMessage);
 
-                Message newMessage = new Message(logged.getProfile().getName(), title, content);
-                receiver.getMessages().add(newMessage);
-            }
-
-        } catch (NullPointerException e){
-            System.out.println("Receiver not found");
         }
 
     }
 
-    public static void sendComment(Project project, User.Person logged){
+    public static void sendComment(Project project, user.Person logged){
         Scanner input = new Scanner(System.in);
 
         for(Project current : logged.getBackedProjects()) {
@@ -96,7 +100,7 @@ public class Message {
         }
     }
 
-    public static void showUnreadMessages(User.Person logged){
+    public static void showUnreadMessages(user.Person logged){
         boolean itHas = false;
         Scanner input = new Scanner(System.in);
 
@@ -107,7 +111,7 @@ public class Message {
             }
         }
         if(itHas){
-            System.out.println("Choice a message");
+            System.out.println("Choose a message");
             String title = input.nextLine();
             showMessage(title, logged.getMessages());
         } else {
@@ -115,7 +119,7 @@ public class Message {
         }
     }
 
-    public static void showAllMessages(User.Person logged){
+    public static void showAllMessages(user.Person logged){
         boolean itHas = false;
         Scanner input = new Scanner(System.in);
 
@@ -124,7 +128,7 @@ public class Message {
             itHas = true;
         }
         if(itHas){
-            System.out.println("Choice a message");
+            System.out.println("Choose a message");
             String title = input.nextLine();
             showMessage(title, logged.getMessages());
         } else {
